@@ -1,0 +1,5 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+47.6,27319771,13,2101520.8,2099102.0,2097726,2127063,7833.2,"gemm_naive(const float *, const float *, float *, int, int, int)"
+35.7,20488019,13,1576001.5,1573873.0,1572625,1598771,6907.5,"gemm_shared(const float *, const float *, float *, int, int, int)"
+11.3,6463116,13,497162.8,484761.0,483129,539451,20287.1,"gemm_register(const float *, const float *, float *, int, int, int)"
+5.5,3130389,14,223599.2,220843.5,217259,248032,8050.3,void cutlass::Kernel2<cutlass_80_simt_sgemm_128x64_8x5_nn_align1>(T1::Params)

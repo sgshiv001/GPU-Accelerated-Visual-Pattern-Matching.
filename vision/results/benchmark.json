@@ -1,0 +1,13 @@
+{
+  "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU (SM 12.0)",
+  "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "platform": "Windows",
+  "torch_threads": 1,
+  "samples": 9,
+  "repeats": 30,
+  "warmup": 8,
+  "held_out_parity": {
+    "direct": 8.58306884765625e-06,
+    "fused": 8.58306884765625e-06
+  }
+}

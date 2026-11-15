@@ -1,0 +1,9 @@
+Time (%),Total Time (ns),Instances,Avg (ns),Med (ns),Min (ns),Max (ns),StdDev (ns),Name
+38.4,745808,7,106544.0,86040.0,83704,231328,55036.1,"void <unnamed>::conv_direct<(int)4, (int)32, (int)64>(const float *, const float *, const float *, float *, int)"
+35.1,681756,7,97393.7,78678.0,77173,211642,50381.9,"void <unnamed>::conv_pool_fused<(int)4, (int)32, (int)64>(const float *, const float *, const float *, float *)"
+17.4,339135,14,24223.9,19509.5,19269,52943,11993.2,"void <unnamed>::dense<(int)256, (int)128, (bool)1>(const float *, const float *, const float *, float *, int)"
+3.3,65041,7,9291.6,7106.0,6594,23270,6173.1,"void <unnamed>::conv_direct<(int)8, (int)1, (int)32>(const float *, const float *, const float *, float *, int)"
+3.3,63761,7,9108.7,7362.0,7330,19653,4649.7,"void <unnamed>::conv_pool_fused<(int)8, (int)1, (int)32>(const float *, const float *, const float *, float *)"
+1.6,30857,14,2204.1,2033.0,1984,3329,470.6,"void <unnamed>::dense<(int)128, (int)10, (bool)0>(const float *, const float *, const float *, float *, int)"
+0.6,10723,7,1531.9,1344.0,1312,2593,469.6,"void <unnamed>::relu_pool<(int)8, (int)32>(const float *, float *, int)"
+0.4,7586,7,1083.7,993.0,960,1600,228.7,"void <unnamed>::relu_pool<(int)4, (int)64>(const float *, float *, int)"

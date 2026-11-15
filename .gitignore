@@ -1,0 +1,6 @@
+build/
+*.ncu-rep
+*.nsys-rep
+*.sqlite
+__pycache__/
+.venv/

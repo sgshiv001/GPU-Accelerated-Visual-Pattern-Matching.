@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>Visual Pattern Matching · Shivanshu Gupta</title>
+<style>
+:root{color-scheme:dark;--bg:#10131b;--panel:#171c27;--panel-hi:#1d2331;--border:#303849;--ink:#f2f4fb;--muted:#b0b9cc;--mint:#baf986;--violet:#b8a5ff;--cyan:#79dced;--warn:#ffd38c;--mono:ui-monospace,SFMono-Regular,Consolas,monospace;--body:Inter,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 75% 0%,#202638 0%,transparent 48rem),var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.wrap{width:min(1100px,calc(100% - 64px));margin:auto}
+header{border-bottom:1px solid var(--border)}
+.top{height:65px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.identity{display:flex;align-items:center;gap:12px;font-weight:650}
+.logo{display:grid;grid-template-columns:repeat(2,5px);gap:3px;background:#283a2e;padding:8px;border-radius:6px}
+.logo i{height:5px;background:var(--mint);border-radius:1px}
+.logo i:nth-child(2){opacity:.38}
+nav{display:flex;gap:24px;font-size:.85rem;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--mint)}
+.hero{padding:54px 0 30px;display:grid;grid-template-columns:minmax(0,1fr) 268px;gap:44px;align-items:end}
+.eyebrow,.tag{font:600 .73rem/1.45 var(--mono);letter-spacing:.075em;text-transform:uppercase;color:var(--mint)}
+h1{font-size:clamp(2.4rem,5vw,4.3rem);letter-spacing:-.065em;line-height:1.03;margin:12px 0 17px}
+.hero p{margin:0;max-width:590px;color:var(--muted)}
+.hardware{padding:17px 19px;background:#1b2130;border:1px solid var(--border);border-radius:12px}
+.hardware span,.hardware strong{display:block}
+.hardware strong{margin:5px 0 2px;font-size:.94rem}
+.hardware small,.note{color:var(--muted);font-size:.83rem}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px}
+.metric,.card{border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+.metric{padding:15px 18px}
+.metric strong{display:block;margin:1px 0;font-size:clamp(1.38rem,3vw,2rem);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.metric span{color:var(--muted);font-size:.83rem}
+.metric:first-child strong{color:var(--violet)}
+.metric:nth-child(2) strong{color:var(--cyan)}
+.metric:last-child strong{color:var(--mint)}
+section{margin:0 0 28px;scroll-margin-top:18px}
+.card{padding:24px}
+h2{font-size:1.4rem;letter-spacing:-.025em;margin:3px 0 2px}
+h3{margin:0 0 6px;font-size:.93rem}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:19px}
+.section-head p,.notes p{margin:4px 0 0}
+.badge{font:600 .7rem/1.35 var(--mono);color:var(--muted);border:1px solid var(--border);padding:6px 9px;border-radius:5px;white-space:nowrap}
+.explorer{display:grid;grid-template-columns:160px minmax(0,1fr);gap:20px}
+.digit{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;background:#0d1017;border:1px solid var(--border);border-radius:9px;padding:9px;width:160px;height:160px}
+.digit i{border-radius:2px}
+.preds{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pred{padding:11px 13px;background:var(--panel-hi);border:1px solid var(--border);border-radius:9px;min-width:0}
+.pred span{font-size:.8rem;color:var(--muted)}
+.pred strong{display:block;font:600 1.65rem/1.3 var(--mono);margin:2px 0}
+.pred small{display:block;font-size:.73rem;color:var(--mint)}
+.pred small.wrong{color:var(--warn)}
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:13px}
+.tools button,.batch button{background:#232a39;color:var(--ink);border:1px solid var(--border);border-radius:7px;padding:6px 11px;font-size:.8rem}
+.tools button:hover,.batch button:hover{background:#30394b}
+.tools button:disabled{opacity:.4;cursor:default}
+.tools button[aria-pressed=true],.batch button[aria-pressed=true]{background:#293c2d;color:var(--mint);border-color:#617756}
+.sample-state{margin-top:8px;font-variant-numeric:tabular-nums}
+.batch{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:17px}
+.batch button{min-width:46px;font-family:var(--mono)}
+.bars{display:grid;gap:10px;margin:0 0 14px}
+.bar{display:grid;grid-template-columns:155px minmax(0,1fr) 85px;align-items:center;gap:12px;font-size:.81rem}
+.track{height:12px;background:#262d3d;border-radius:3px;overflow:hidden}
+.fill{height:100%;min-width:2px;border-radius:3px;transition:width .2s}
+.value{text-align:right;font:600 .78rem/1 var(--mono);font-variant-numeric:tabular-nums}
+#readout{margin:0;color:var(--muted);font-size:.86rem}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:20px;color:var(--muted);font-size:.88rem}
+.notes h3{color:var(--ink)}
+footer{border-top:1px solid var(--border);padding:22px 0;color:var(--muted);font-size:.82rem}
+@media(max-width:700px){.wrap{width:calc(100% - 32px)}.hero{grid-template-columns:1fr;gap:18px;padding:34px 0 19px}.hardware{padding:11px 14px}.metrics{gap:7px;margin-bottom:22px}.metric{padding:10px}.metric span{font-size:.74rem}.card{padding:15px}.explorer{grid-template-columns:112px minmax(0,1fr);gap:11px}.digit{width:112px;height:112px;padding:6px}.preds{gap:4px}.pred{padding:6px}.pred span{font-size:.68rem}.pred strong{font-size:1.15rem}.pred small{font-size:.65rem}.bar{grid-template-columns:102px minmax(0,1fr) 67px;gap:6px;font-size:.74rem}.value{font-size:.69rem}.notes{grid-template-columns:1fr;gap:12px}.badge{white-space:normal}.top{height:auto;min-height:57px}.identity{font-size:.86rem;gap:8px}nav{gap:10px;font-size:.73rem}}
+@media(max-width:360px){.explorer{grid-template-columns:1fr}.digit{width:126px;height:126px}.metric strong{font-size:1.16rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.fill{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap top">
+  <div class="identity"><span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span> Shivanshu Gupta</div>
+  <nav aria-label="Sections"><a href="#predictions">Predictions</a><a href="#performance">Performance</a><a href="#method">Method</a></nav>
+</div></header>
+<main class="wrap">
+  <div class="hero">
+    <div><div class="eyebrow">Applied thesis · CUDA C++ / Computer vision</div>
+    <h1>Visual Pattern<br>Matching</h1>
+    <p>Two ways to recognize handwritten digits, one held-out test set, and a native CUDA inference engine to measure where GPU batching pays off.</p></div>
+    <aside class="hardware"><span class="tag">Measured on device</span><strong id="gpu">NVIDIA RTX 5060 Laptop GPU</strong><small>FP32 inference · CUDA 13.4</small></aside>
+  </div>
+  <div class="metrics" aria-label="Measured results">
+    <div class="metric"><strong id="svm-acc"></strong><span>HOG–PCA–SVM accuracy</span></div>
+    <div class="metric"><strong id="cnn-acc"></strong><span>CNN accuracy</span></div>
+    <div class="metric"><strong id="parity"></strong><span>CUDA predictions match PyTorch</span></div>
+  </div>
+  <section class="card" id="predictions" aria-labelledby="pred-title">
+    <div class="section-head">
+      <div><div class="tag">01 / Model comparison</div><h2 id="pred-title">Inspect a prediction</h2><p class="note">Browse the 8×8 images that neither model saw during training.</p></div>
+      <span class="badge">Recorded predictions</span>
+    </div>
+    <div class="explorer">
+      <div id="digit" class="digit" role="img" aria-label="Handwritten digit"></div>
+      <div>
+        <div class="preds" aria-live="polite">
+          <div class="pred"><span>True label</span><strong id="label"></strong><small>Dataset</small></div>
+          <div class="pred"><span>HOG–PCA–SVM</span><strong id="svm"></strong><small id="svm-mark"></small></div>
+          <div class="pred"><span>CNN</span><strong id="cnn"></strong><small id="cnn-mark"></small></div>
+        </div>
+        <div class="tools">
+          <button type="button" id="previous">← Previous</button><button type="button" id="next">Next →</button>
+          <button type="button" id="errors" aria-pressed="false">Show mistakes</button>
+        </div>
+        <div id="sample-state" class="note sample-state" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+  <section class="card" id="performance" aria-labelledby="perf-title">
+    <div class="section-head"><div><div class="tag">02 / GPU benchmark</div><h2 id="perf-title">Find the batch crossover</h2><p class="note">Median milliseconds per batch. Shorter is faster.</p></div><span class="badge">Recorded timings</span></div>
+    <div class="batch" id="batches" role="group" aria-label="Select number of images per batch"></div>
+    <div class="bars" id="bars" aria-live="polite"></div>
+    <p id="readout"></p>
+  </section>
+  <section class="card" id="method" aria-labelledby="method-title">
+    <div class="section-head"><div><div class="tag">03 / Engineering notes</div><h2 id="method-title">What changed and why</h2></div></div>
+    <div class="notes">
+      <div><h3>One split, two classifiers</h3><p id="method-data"></p></div>
+      <div><h3>Four launches instead of six</h3><p>Each fused convolution block stages its input in shared memory. Four lanes compute a pooling window and exchange their maxima, so the full convolution tensor never goes to global memory.</p></div>
+      <div><h3>Fair timing scopes</h3><p>CPU is single-thread PyTorch. Copy-inclusive GPU timings include upload, inference, and download. Resident timings keep the input on the device. All exclude setup.</p></div>
+      <div><h3>Scope of the evidence</h3><p>This is a small, fixed-shape digit benchmark. Results reflect this split and laptop. The browser replays the captured results; the source project runs the native kernels.</p></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">Shivanshu Gupta · Thesis portfolio · scikit-learn Digits
+  · <a href="https://github.com/sgshiv001/GPU-Accelerated-Visual-Pattern-Matching.">Source and setup</a>
+  · <a href="https://github.com/sgshiv001/GPU-Accelerated-Visual-Pattern-Matching./blob/main/docs/Thesis-Report.pdf">Thesis report</a>
+</div></footer>
+<script id="dataset" type="application/json">/*__DEMO_DATA__*/</script>
+<script>
+"use strict";
+const byId = id => document.getElementById(id);
+const {metrics, samples, timings, hardware} = JSON.parse(byId("dataset").textContent);
+const percent = value => (100 * value).toFixed(2) + "%";
+byId("svm-acc").textContent = percent(metrics.classical.accuracy);
+byId("cnn-acc").textContent = percent(metrics.cnn.accuracy);
+byId("parity").textContent = metrics.test_count + " / " + metrics.test_count;
+byId("gpu").textContent = hardware.gpu.replace("GeForce ", "").replace(/ \(SM .*\)$/, "");
+byId("method-data").textContent = metrics.train_count + " training images, " + metrics.test_count +
+  " test images. The classical model uses 36 HOG features and " + metrics.pca_components +
+  " learned principal components. The two-block CNN was trained for " + metrics.epochs + " epochs.";
+
+const mistakes = samples.filter(s => s.svm !== s.label || s.cnn !== s.label);
+let selected = 0, onlyErrors = false;
+const pixels = Array.from({length:64}, () => document.createElement("i"));
+byId("digit").append(...pixels);
+function showSample() {
+  const set = onlyErrors ? mistakes : samples, sample = set[selected];
+  sample.pixels.forEach((p,i) => { pixels[i].style.backgroundColor = "rgb(" +
+    [24 + Math.round(p * 9),32 + Math.round(p * 13),42 + Math.round(p * 8)].join(",") + ")"; });
+  byId("digit").setAttribute("aria-label", "Handwritten digit " + sample.label);
+  byId("label").textContent = sample.label;
+  for (const key of ["svm", "cnn"]) {
+    byId(key).textContent = sample[key];
+    const correct = sample[key] === sample.label;
+    byId(key + "-mark").textContent = correct ? "Correct" : "Incorrect";
+    byId(key + "-mark").classList.toggle("wrong", !correct);
+  }
+  byId("sample-state").textContent = (selected + 1) + " of " + set.length + " · Dataset sample #" + sample.id;
+  byId("previous").disabled = selected === 0;
+  byId("next").disabled = selected + 1 === set.length;
+}
+byId("previous").onclick = () => { selected--; showSample(); };
+byId("next").onclick = () => { selected++; showSample(); };
+byId("errors").disabled = mistakes.length === 0;
+byId("errors").onclick = () => {
+  onlyErrors = !onlyErrors;
+  selected = 0;
+  byId("errors").setAttribute("aria-pressed", String(onlyErrors));
+  showSample();
+};
+showSample();
+
+const formats = [
+  ["CPU · PyTorch", "cpu_ms", "var(--violet)"],
+  ["CUDA · with copies", "fused_wall_ms", "var(--mint)"],
+  ["CUDA · resident", "fused_gpu_ms", "var(--cyan)"]
+];
+function showBatch(row) {
+  for (const button of byId("batches").children)
+    button.setAttribute("aria-pressed", String(Number(button.dataset.batch) === row.batch));
+  const scale = Math.max(...formats.map(([,key]) => row[key]));
+  byId("bars").replaceChildren(...formats.map(([name,key,color]) => {
+    const item = document.createElement("div"); item.className = "bar";
+    const label = document.createElement("span"); label.textContent = name;
+    const track = document.createElement("div"); track.className = "track"; track.setAttribute("aria-hidden","true");
+    const fill = document.createElement("div"); fill.className = "fill";
+    fill.style.width = (100 * row[key] / scale) + "%"; fill.style.background = color; track.append(fill);
+    const val = document.createElement("span"); val.className = "value"; val.textContent = row[key].toFixed(3) + " ms";
+    item.append(label, track, val); return item;
+  }));
+  const ratio = row.cpu_ms / row.fused_wall_ms;
+  const kernel = row.direct_gpu_ms / row.fused_gpu_ms;
+  byId("readout").textContent = (ratio >= 1
+    ? "Including copies, fused CUDA was " + ratio.toFixed(2) + "× as fast as the CPU baseline."
+    : "Including copies, the CPU baseline was " + (1/ratio).toFixed(2) + "× as fast as fused CUDA.") +
+    " With inputs already on the GPU, direct CUDA took " + row.direct_gpu_ms.toFixed(3) + " ms (" +
+    kernel.toFixed(2) + "× the fused time).";
+}
+for (const row of timings) {
+  const button = document.createElement("button");
+  button.type = "button"; button.textContent = row.batch; button.dataset.batch = row.batch;
+  button.setAttribute("aria-label", row.batch + " images per batch");
+  button.onclick = () => showBatch(row);
+  byId("batches").append(button);
+}
+showBatch(timings[0]);
+</script>
+</body>
+</html>
