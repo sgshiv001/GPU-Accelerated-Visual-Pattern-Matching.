@@ -1,8 +1,8 @@
 # GPU-Accelerated Visual Pattern Matching
 
-**Shivanshu Gupta · Thesis portfolio · CUDA C++ and computer vision**
+**Shivanshu Gupta · Personal thesis project · CUDA C++ and computer vision**
 
-[Final Bennett University thesis report (PDF)](../docs/Thesis-Report.pdf)
+[Personal thesis report (PDF)](../docs/Thesis-Report.pdf)
 
 Double-click **Visual Pattern Matching - CUDA Dashboard** on the Windows desktop or open [Launch Dashboard.cmd](../Launch%20Dashboard.cmd) from the project folder. Use **Predict on CUDA** to run the selected digit through the trained CNN, or select a batch size and choose **Run benchmark** to replace its saved timing on screen with a live measurement. Each live run saves its log and any benchmark files under `build/dashboard-runs/`. If the native engine has yet to be built, use **Build CUDA** in the window.
 

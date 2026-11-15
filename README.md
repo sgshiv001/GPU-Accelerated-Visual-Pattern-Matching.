@@ -1,6 +1,6 @@
 # GPU-Accelerated Visual Pattern Matching
 
-**Shivanshu Gupta · Bennett University thesis portfolio**
+**Shivanshu Gupta · Personal thesis and CUDA project**
 
 A handwritten digit classifier and CUDA C++ inference benchmark. The project compares HOG–PCA–SVM with a trained CNN on the same held-out images, then tests when a custom GPU implementation can overcome launch and transfer costs.
 
@@ -40,7 +40,7 @@ At batch 128, fusing the CUDA layers lowered device-resident latency by **13.7%*
 | Direct CUDA inference | Run each convolution and its activation/pooling as separate kernels, then run the two dense layers. This produces six kernel launches per forward pass. |
 | Fused CUDA inference | Stage inputs in shared memory and use warp shuffles to compute pooling maxima. Each convolution block writes the pooled result directly, reducing the forward pass to four launches. |
 
-The [original thesis](docs/Thesis-Report.pdf) supplies the research question and model designs. Its historical figures include simulated CNN results and analytical GPU estimates. The README reports measurements from this implementation. The [implementation notes](vision/README.md#how-this-relates-to-the-thesis) explain the PCA, padding, and convolution choices.
+The [personal thesis report](docs/Thesis-Report.pdf) presents the research question, model designs, and mathematical derivations. The research figures include simulated CNN results and analytical GPU estimates. The README reports measurements from this implementation. The [implementation notes](vision/README.md#how-this-relates-to-the-thesis) explain the PCA, padding, and convolution choices.
 
 ## Try it in the browser
 
@@ -79,5 +79,5 @@ python vision/make_demo.py
 | [vision/inference.cu](vision/inference.cu) | Direct and fused CUDA kernels, device buffers and timing |
 | [vision/dashboard.py](vision/dashboard.py) | Windows dashboard with live inference and benchmarking |
 | [vision/results/](vision/results/) | Trained weights, held-out predictions, measurements and profiler summaries |
-| [docs/Thesis-Report.pdf](docs/Thesis-Report.pdf) | Final Bennett University thesis report |
+| [docs/Thesis-Report.pdf](docs/Thesis-Report.pdf) | Personal thesis report with research methods, figures, and references |
 | [docs/GEMM.md](docs/GEMM.md) | Companion CUDA matrix multiplication lab with shared-memory and register tiling |
